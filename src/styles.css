@@ -1,0 +1,570 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  --color-neon: var(--neon);
+  --color-neon-glow: var(--neon-glow);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+
+  --font-display: "Instrument Serif", ui-serif, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Noir editorial palette */
+  --background: oklch(0.13 0.012 260);
+  --foreground: oklch(0.97 0.005 90);
+  --paper: oklch(0.96 0.008 85);
+  --ink: oklch(0.12 0.01 260);
+
+  --card: oklch(0.17 0.013 260);
+  --card-foreground: oklch(0.97 0.005 90);
+  --popover: oklch(0.17 0.013 260);
+  --popover-foreground: oklch(0.97 0.005 90);
+
+  --primary: oklch(0.97 0.005 90);
+  --primary-foreground: oklch(0.13 0.012 260);
+
+  --secondary: oklch(0.22 0.014 260);
+  --secondary-foreground: oklch(0.97 0.005 90);
+
+  --muted: oklch(0.2 0.013 260);
+  --muted-foreground: oklch(0.65 0.015 260);
+
+  --accent: oklch(0.85 0.18 95);
+  --accent-foreground: oklch(0.13 0.012 260);
+
+  --neon: oklch(0.88 0.2 95);
+  --neon-glow: oklch(0.88 0.22 95 / 0.5);
+
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.97 0.005 90);
+
+  --border: oklch(1 0 0 / 0.08);
+  --input: oklch(1 0 0 / 0.1);
+  --ring: oklch(0.85 0.18 95);
+
+  --gradient-aurora: radial-gradient(ellipse at top, oklch(0.3 0.15 280 / 0.4), transparent 60%),
+                     radial-gradient(ellipse at bottom right, oklch(0.7 0.2 95 / 0.25), transparent 50%),
+                     radial-gradient(ellipse at bottom left, oklch(0.5 0.2 200 / 0.3), transparent 55%);
+  --gradient-neon: linear-gradient(135deg, oklch(0.88 0.2 95), oklch(0.75 0.2 50));
+  --shadow-glow: 0 0 60px -10px oklch(0.88 0.22 95 / 0.5);
+  --shadow-elegant: 0 30px 80px -20px oklch(0 0 0 / 0.5);
+}
+
+.dark { color-scheme: dark; }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { 
+    scroll-behavior: smooth; 
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) var(--background);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--neon); color: var(--ink); }
+
+  /* Premium theme-adaptive scrollbar stylings */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border: 2px solid var(--background);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-mono { font-family: var(--font-mono); }
+
+  .bg-aurora { background-image: var(--gradient-aurora); }
+  .text-gradient {
+    background: var(--gradient-neon);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glow { box-shadow: var(--shadow-glow); }
+  .noise {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+  }
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .marquee {
+    animation: marquee 40s linear infinite;
+  }
+  .float { animation: float 6s ease-in-out infinite; }
+  .shine {
+    background: linear-gradient(110deg, transparent 40%, oklch(1 0 0 / 0.2) 50%, transparent 60%);
+    background-size: 200% 100%;
+    animation: shine 3s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes shine {
+  to { background-position: -200% 0; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer-sweep {
+  0% { transform: translateX(-150%) rotate(45deg); }
+  100% { transform: translateX(150%) rotate(45deg); }
+}
+@keyframes rainbow-border {
+  0%, 100% { border-color: var(--primary); }
+  20% { border-color: #06b6d4; }
+  40% { border-color: #a855f7; }
+  60% { border-color: #f43f5e; }
+  80% { border-color: #84cc16; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.animate-fade-up { animation: fade-up 0.7s ease-out both; }
+.animate-shimmer-sweep { animation: shimmer-sweep 3s ease-in-out infinite; }
+.animate-rainbow-border { animation: rainbow-border 6s linear infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Cyberpunk Theme Override */
+.theme-cyberpunk {
+  --background: #050505;
+  --foreground: #f4f4f5;
+  --paper: #f4f4f5;
+  --ink: #000000;
+  --card: #0c0c0e;
+  --card-foreground: #f4f4f5;
+  --popover: #0c0c0e;
+  --popover-foreground: #f4f4f5;
+  --primary: #84cc16;
+  --primary-foreground: #000000;
+  --secondary: #18181b;
+  --secondary-foreground: #a1a1aa;
+  --muted: #18181b;
+  --muted-foreground: #71717a;
+  --accent: #84cc16;
+  --accent-foreground: #000000;
+  --neon: #84cc16;
+  --neon-glow: rgba(132, 204, 22, 0.4);
+  --border: #27272a;
+  --input: #18181b;
+  --ring: #84cc16;
+  --radius: 0rem;
+  --font-sans: "JetBrains Mono", monospace;
+  --font-display: "JetBrains Mono", monospace;
+  --gradient-neon: linear-gradient(135deg, #84cc16, #4d7c0f);
+  --shadow-glow: 0 0 40px rgba(132, 204, 22, 0.25);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(132, 204, 22, 0.1), transparent 60%),
+                     radial-gradient(ellipse at bottom right, rgba(132, 204, 22, 0.05), transparent 50%);
+}
+
+/* Claymorphism Theme Override */
+.theme-claymorphism {
+  --background: #fff5f5;
+  --foreground: #4c0519;
+  --paper: #ffffff;
+  --ink: #4c0519;
+  --card: #ffffff;
+  --card-foreground: #4c0519;
+  --popover: #ffffff;
+  --popover-foreground: #4c0519;
+  --primary: #f43f5e;
+  --primary-foreground: #ffffff;
+  --secondary: #ffe4e6;
+  --secondary-foreground: #e11d48;
+  --muted: #fff1f2;
+  --muted-foreground: #fda4af;
+  --accent: #f43f5e;
+  --accent-foreground: #ffffff;
+  --neon: #f43f5e;
+  --neon-glow: rgba(244, 63, 94, 0.2);
+  --border: #ffe4e6;
+  --input: #fff1f2;
+  --ring: #f43f5e;
+  --radius: 2rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --gradient-neon: linear-gradient(135deg, #f43f5e, #fda4af);
+  --shadow-glow: 0 10px 30px rgba(244, 63, 94, 0.15);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(244, 63, 94, 0.12), transparent 60%),
+                     radial-gradient(ellipse at bottom right, rgba(251, 113, 133, 0.08), transparent 50%);
+}
+
+/* Neubrutalism Theme Override */
+.theme-neubrutalism {
+  --background: #fefce8;
+  --foreground: #000000;
+  --paper: #ffffff;
+  --ink: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #ffffff;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --neon: #2563eb;
+  --neon-glow: rgba(37, 99, 235, 0.15);
+  --border: #000000;
+  --input: #ffffff;
+  --ring: #000000;
+  --radius: 0rem;
+  --font-sans: "Arial Black", sans-serif;
+  --font-display: "Arial Black", sans-serif;
+  --gradient-neon: linear-gradient(135deg, #000000, #333333);
+  --shadow-glow: 6px 6px 0px rgba(0, 0, 0, 1);
+  --gradient-aurora: none;
+}
+
+/* Warm Minimalist Theme Override */
+.theme-minimalist {
+  --background: #faf6f0;
+  --foreground: #1c1917;
+  --paper: #ffffff;
+  --ink: #1c1917;
+  --card: #f5f0e6;
+  --card-foreground: #1c1917;
+  --popover: #f5f0e6;
+  --popover-foreground: #1c1917;
+  --primary: #292524;
+  --primary-foreground: #faf6f0;
+  --secondary: #e7e5e4;
+  --secondary-foreground: #44403c;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
+  --accent: #78716c;
+  --accent-foreground: #faf6f0;
+  --neon: #78716c;
+  --neon-glow: rgba(120, 113, 108, 0.2);
+  --border: #e7e5e4;
+  --input: #f5f0e6;
+  --ring: #78716c;
+  --radius: 0.5rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --gradient-neon: linear-gradient(135deg, #292524, #57524e);
+  --shadow-glow: 0 4px 20px rgba(120, 113, 108, 0.08);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(120, 113, 108, 0.05), transparent 60%);
+}
+
+/* Luxury Editorial Theme Override */
+.theme-luxury {
+  --background: #081a11;
+  --foreground: #f4ebe1;
+  --paper: #f4ebe1;
+  --ink: #081a11;
+  --card: #0d2a1b;
+  --card-foreground: #f4ebe1;
+  --popover: #0d2a1b;
+  --popover-foreground: #f4ebe1;
+  --primary: #c9a84c;
+  --primary-foreground: #081a11;
+  --secondary: #143e28;
+  --secondary-foreground: #f4ebe1;
+  --muted: #0d2a1b;
+  --muted-foreground: #a3a3a3;
+  --accent: #c9a84c;
+  --accent-foreground: #081a11;
+  --neon: #c9a84c;
+  --neon-glow: rgba(201, 168, 76, 0.3);
+  --border: rgba(201, 168, 76, 0.2);
+  --input: #0d2a1b;
+  --ring: #c9a84c;
+  --radius: 0rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: Georgia, serif;
+  --gradient-neon: linear-gradient(135deg, #c9a84c, #b3923b);
+  --shadow-glow: 0 0 30px rgba(201, 168, 76, 0.2);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(201, 168, 76, 0.08), transparent 60%),
+                     radial-gradient(ellipse at bottom right, rgba(20, 62, 40, 0.3), transparent 50%);
+}
+
+/* Trust-UI Theme Override */
+.theme-trust {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --paper: #ffffff;
+  --ink: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0ea5e9;
+  --primary-foreground: #ffffff;
+  --secondary: #f0f9ff;
+  --secondary-foreground: #0369a1;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0ea5e9;
+  --accent-foreground: #ffffff;
+  --neon: #0ea5e9;
+  --neon-glow: rgba(14, 165, 233, 0.2);
+  --border: #e2e8f0;
+  --input: #ffffff;
+  --ring: #0ea5e9;
+  --radius: 1.25rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --gradient-neon: linear-gradient(135deg, #0ea5e9, #0284c7);
+  --shadow-glow: 0 4px 25px rgba(14, 165, 233, 0.1);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(14, 165, 233, 0.06), transparent 60%);
+}
+
+/* Bento SaaS Theme Override */
+.theme-bento {
+  --background: #05011a;
+  --foreground: #f3eeff;
+  --paper: #f3eeff;
+  --ink: #05011a;
+  --card: #0b052d;
+  --card-foreground: #f3eeff;
+  --popover: #0b052d;
+  --popover-foreground: #f3eeff;
+  --primary: #a855f7;
+  --primary-foreground: #ffffff;
+  --secondary: #170d4f;
+  --secondary-foreground: #d8b4fe;
+  --muted: #0f0a38;
+  --muted-foreground: #9333ea;
+  --accent: #a855f7;
+  --accent-foreground: #ffffff;
+  --neon: #a855f7;
+  --neon-glow: rgba(168, 85, 247, 0.3);
+  --border: #1e135a;
+  --input: #0b052d;
+  --ring: #a855f7;
+  --radius: 1.5rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --gradient-neon: linear-gradient(135deg, #a855f7, #c084fc);
+  --shadow-glow: 0 0 35px rgba(168, 85, 247, 0.2);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(168, 85, 247, 0.12), transparent 60%),
+                     radial-gradient(ellipse at bottom left, rgba(99, 102, 241, 0.08), transparent 50%);
+}
+
+/* Retro Synthwave Theme Override */
+.theme-synthwave {
+  --background: #12092e;
+  --foreground: #f8f8fa;
+  --paper: #ffffff;
+  --ink: #12092e;
+  --card: #1c0e48;
+  --card-foreground: #f8f8fa;
+  --popover: #1c0e48;
+  --popover-foreground: #f8f8fa;
+  --primary: #ff007f;
+  --primary-foreground: #ffffff;
+  --secondary: #281466;
+  --secondary-foreground: #00f0ff;
+  --muted: #170b3b;
+  --muted-foreground: #9d4edd;
+  --accent: #00f0ff;
+  --accent-foreground: #12092e;
+  --neon: #ff007f;
+  --neon-glow: rgba(255, 0, 127, 0.35);
+  --border: #321880;
+  --input: #1c0e48;
+  --ring: #ff007f;
+  --radius: 0.75rem;
+  --font-sans: "JetBrains Mono", monospace;
+  --font-display: "JetBrains Mono", monospace;
+  --gradient-neon: linear-gradient(135deg, #ff007f, #00f0ff);
+  --shadow-glow: 0 0 30px rgba(255, 0, 127, 0.3);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(255, 0, 127, 0.15), transparent 60%),
+                     radial-gradient(ellipse at bottom left, rgba(0, 240, 255, 0.1), transparent 50%);
+}
+
+/* Forest Sage / Bio-mimicry Theme Override */
+.theme-sage {
+  --background: #f4f5f1;
+  --foreground: #2b332f;
+  --paper: #ffffff;
+  --ink: #2b332f;
+  --card: #e5e8e0;
+  --card-foreground: #2b332f;
+  --popover: #e5e8e0;
+  --popover-foreground: #2b332f;
+  --primary: #586b62;
+  --primary-foreground: #f4f5f1;
+  --secondary: #d4d9cc;
+  --secondary-foreground: #1f2623;
+  --muted: #eaede5;
+  --muted-foreground: #7a8c80;
+  --accent: #d49a6a;
+  --accent-foreground: #2b332f;
+  --neon: #586b62;
+  --neon-glow: rgba(88, 107, 98, 0.15);
+  --border: #d2d6cb;
+  --input: #eaede5;
+  --ring: #586b62;
+  --radius: 1rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --gradient-neon: linear-gradient(135deg, #586b62, #d49a6a);
+  --shadow-glow: 0 4px 20px rgba(88, 107, 98, 0.08);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(88, 107, 98, 0.05), transparent 60%);
+}
+
+/* Nordic Frost / Polar Ice Theme Override */
+.theme-polar {
+  --background: #f0f4f8;
+  --foreground: #1e293b;
+  --paper: #ffffff;
+  --ink: #1e293b;
+  --card: #e2e8f0;
+  --card-foreground: #1e293b;
+  --popover: #e2e8f0;
+  --popover-foreground: #1e293b;
+  --primary: #0284c7;
+  --primary-foreground: #ffffff;
+  --secondary: #cbd5e1;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #0d9488;
+  --accent-foreground: #ffffff;
+  --neon: #0284c7;
+  --neon-glow: rgba(2, 132, 199, 0.15);
+  --border: #cbd5e1;
+  --input: #f1f5f9;
+  --ring: #0284c7;
+  --radius: 0.375rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
+  --gradient-neon: linear-gradient(135deg, #0284c7, #0d9488);
+  --shadow-glow: 0 4px 20px rgba(2, 132, 199, 0.1);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(2, 132, 199, 0.08), transparent 60%);
+}
+
+/* Vaporwave Dream Theme Override */
+.theme-vaporwave {
+  --background: #f5f0fa;
+  --foreground: #4a154b;
+  --paper: #ffffff;
+  --ink: #4a154b;
+  --card: #ebdcf5;
+  --card-foreground: #4a154b;
+  --popover: #ebdcf5;
+  --popover-foreground: #4a154b;
+  --primary: #ff79c6;
+  --primary-foreground: #ffffff;
+  --secondary: #d6e4ff;
+  --secondary-foreground: #ff79c6;
+  --muted: #fbf6ff;
+  --muted-foreground: #bd93f9;
+  --accent: #50fa7b;
+  --accent-foreground: #4a154b;
+  --neon: #ff79c6;
+  --neon-glow: rgba(255, 121, 198, 0.25);
+  --border: #d6bdf2;
+  --input: #fbf6ff;
+  --ring: #ff79c6;
+  --radius: 1.75rem;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --gradient-neon: linear-gradient(135deg, #ff79c6, #8be9fd);
+  --shadow-glow: 0 8px 25px rgba(255, 121, 198, 0.2);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(255, 121, 198, 0.15), transparent 60%),
+                     radial-gradient(ellipse at bottom left, rgba(139, 233, 253, 0.12), transparent 50%);
+}
+
+/* Hyper-Neon Sunset Theme Override */
+.theme-sunset {
+  --background: #0d061c;
+  --foreground: #fff7ed;
+  --paper: #ffffff;
+  --ink: #0d061c;
+  --card: #180d2b;
+  --card-foreground: #fff7ed;
+  --popover: #180d2b;
+  --popover-foreground: #fff7ed;
+  --primary: #f97316;
+  --primary-foreground: #ffffff;
+  --secondary: #311c52;
+  --secondary-foreground: #ff007f;
+  --muted: #130a24;
+  --muted-foreground: #a78bfa;
+  --accent: #ff007f;
+  --accent-foreground: #ffffff;
+  --neon: #f97316;
+  --neon-glow: rgba(249, 115, 22, 0.35);
+  --border: #381a63;
+  --input: #180d2b;
+  --ring: #f97316;
+  --radius: 0.5rem;
+  --font-sans: "JetBrains Mono", monospace;
+  --font-display: "JetBrains Mono", monospace;
+  --gradient-neon: linear-gradient(135deg, #f97316, #ff007f);
+  --shadow-glow: 0 0 35px rgba(249, 115, 22, 0.25);
+  --gradient-aurora: radial-gradient(ellipse at top, rgba(249, 115, 22, 0.15), transparent 60%),
+                     radial-gradient(ellipse at bottom right, rgba(255, 0, 127, 0.1), transparent 55%);
+}
